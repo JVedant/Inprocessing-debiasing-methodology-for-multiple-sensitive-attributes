@@ -5,6 +5,61 @@ import torch.nn.functional as F
 from models.reverse_func import grad_reverse
 
 
+class denseNet121Baseline(torch.nn.Module):
+    def __init__(self, num_task_classes):
+        """
+        Initialize the denseNet121BiasMultiLabelV1 model.
+
+        Args:
+            num_task_classes (int): Number of classes for the main task.
+            num_dem_classes (int or tuple): Number of classes for each demographic factor.
+        """
+        super().__init__()
+        self.model = models.densenet121(weights=models.DenseNet121_Weights.DEFAULT)
+        in_features = self.model.classifier.in_features
+
+        # Define the main task classifier
+        self.model.classifier = nn.Sequential(
+            nn.Linear(in_features, in_features // 4),
+            nn.ReLU(),
+            nn.Linear(in_features // 4, in_features // 16),
+            nn.ReLU(),
+            nn.Linear(in_features // 16, num_task_classes),
+        )
+
+    def forward(self, x):
+        """
+        Forward pass of the model.
+
+        Args:
+            x (torch.Tensor): Input tensor.
+
+        Returns:
+            tuple: Task classification output.
+        """
+        out = self.embed(x)
+        task_classi = self.model.classifier(out)
+
+        return task_classi
+
+    def embed(self, x):
+        """
+        Extract features from the input using the DenseNet121 backbone.
+
+        Args:
+            x (torch.Tensor): Input tensor.
+
+        Returns:
+            torch.Tensor: Extracted features.
+        """
+        feats = self.model.features(x)
+        out = F.relu(feats, inplace=True)
+        out = F.adaptive_avg_pool2d(out, (1, 1))
+        out = torch.flatten(out, 1)
+        return out
+
+
+
 class denseNet121BiasMultiLabel(torch.nn.Module):
     def __init__(self, num_task_classes, num_dem_classes):
         """
