@@ -6,11 +6,11 @@ from torch.utils.tensorboard import SummaryWriter
 import os
 import pandas as pd
 
-import config
-from dataset import CXR_Multi_Demographic
-from training import Engine
+from src import config
+from src.dataset import CXR_Multi_Demographic
+from src.training import Engine
 
-from models.debiasModels import *
+from src.models.debiasModels import *
 from datetime import datetime
 
 # Main function to run the training process
