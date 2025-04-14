@@ -1,8 +1,12 @@
+# import sys
+# import os
+# sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import torch
 from torch import nn
 import torchvision.models as models
 import torch.nn.functional as F
-from models.reverse_func import grad_reverse
+from src.models.reverse_func import grad_reverse
 
 
 class denseNet121Baseline(torch.nn.Module):

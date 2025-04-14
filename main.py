@@ -20,10 +20,11 @@ if __name__ == "__main__":
     model_name = f"denseNet121BiasMultiLabel"
 
     # Set up the optimizer
-    optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LR, weight_decay=config.WEIGHT_DECAY)
+    # optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LR, weight_decay=config.WEIGHT_DECAY)
 
     # Create object of engine class
-    engine = Engine(model=model, optimizer=optimizer)
+    # engine = Engine(model=model, optimizer=optimizer)
+    engine = Engine(model=model)
     
     # Run the training process
-    run(engine, model_name, optimizer)
+    run(engine, model_name)

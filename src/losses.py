@@ -1,8 +1,11 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import torch
 import torch.nn as nn
 import numpy as np
-import config
-import pdb
+from src import config
 
 # Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics
 class MultiTaskLossWrapper(nn.Module):

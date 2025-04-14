@@ -6,6 +6,9 @@ from torch.utils.tensorboard import SummaryWriter
 import os
 import pandas as pd
 
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 from src import config
 from src.dataset import CXR_Multi_Demographic
 

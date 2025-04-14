@@ -1,10 +1,14 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import numpy as np
 import torch
 from PIL import Image
-import os
 from collections import defaultdict
 from skimage import exposure
-import config
+
+from src import config
 
 class CXR_Multi_Demographic(torch.utils.data.Dataset):
     def __init__(self, traindir, dataframe, transforms):
@@ -26,12 +30,13 @@ class CXR_Multi_Demographic(torch.utils.data.Dataset):
         counter = 0
         for each in range(len(self.df)):
             self.data[counter] = {
-                "image_path": os.path.join(self.traindir, self.df.ChexpertPath.iloc[each]),
+                "image_path": os.path.join(self.traindir, self.df.ChexpertSmallPath.iloc[each]),
                 "Demographic": {demographic[i]: self.df[demographic[i]].iloc[each] for i in range(len(demographic))},
                 "No Finding": self.df["No Finding Clean"].iloc[each],
                 "Edema": self.df["Edema"].iloc[each],
                 "Pleural Effusion": self.df["Pleural Effusion"].iloc[each],
                 "Lung Opacity": self.df["Lung Opacity"].iloc[each],
+                "Atelectasis": self.df["Atelectasis"].iloc[each],
             }
             counter += 1
 

@@ -1,29 +1,36 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 import torch
 import torch.nn as nn
 from tqdm import tqdm
-import config
-from losses import MultiTaskLossWrapper
+# import config
+from src.losses import MultiTaskLossWrapper
+
+from src import config
 
 class Engine:
     """
     Engine class for training and validating a debiased multi-task model.
     """
 
-    def __init__(self, model, optimizer):
+    def __init__(self, model):
         """
         Initialize the Engine.
 
         Args:
             model: The neural network model to train.
-            optimizer: The optimizer for updating model weights.
         """
         self.model = model
-        self.optimizer = optimizer
         self.task_criterion = nn.BCEWithLogitsLoss(
             pos_weight=torch.tensor(config.BCE_LOSS_WEIGHTS).to(config.DEVICE),
             reduction="none"
         )
         self.adv_criterion = MultiTaskLossWrapper(num_of_task=3)
+
+        params = ([p for p in model.parameters()] + [self.adv_criterion.log_vars])
+        self.optimizer = torch.optim.Adam(params=params, lr=config.LR, weight_decay=config.WEIGHT_DECAY)     
 
     @staticmethod
     def switch_bias_mode(model, mode_val):

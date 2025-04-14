@@ -15,14 +15,14 @@ LR = 1e-6  # Learning rate
 WEIGHT_DECAY = 1e-2  # Weight decay for optimizer
 
 # Data paths
-TRAIN_PATH = f"/home/vedant/Projects/Data/Chexpert/train.csv"
-VALID_PATH = f"/home/vedant/Projects/Data/Chexpert/valid.csv"
+TRAIN_PATH = "/mnt/storage/Vedant/Data/CheXpert/V1/Data/Chexpert/V4/train.csv"
+VALID_PATH = "/mnt/storage/Vedant/Data/CheXpert/V1/Data/Chexpert/V4/valid.csv"
 TEST_PATH = f"/home/vedant/Projects/Data/Chexpert/test.csv"
 DATASET_DIR = '/mnt/storage'
 
 # Set up logging and model directories
-LOG_DIR = f'../Logs//{DEMOGRAPHICS}/lambda{LAMBDA}'
-MODEL_DIR = f'../Models//{DEMOGRAPHICS}/lambda{LAMBDA}'
+LOG_DIR = f'../Logs/{DEMOGRAPHICS}/lambda{LAMBDA}'
+MODEL_DIR = f'../Models/{DEMOGRAPHICS}/lambda{LAMBDA}'
 
 # Image configuration
 IMAGE_HEIGHT = 256
