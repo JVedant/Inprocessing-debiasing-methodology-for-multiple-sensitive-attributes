@@ -26,7 +26,7 @@ def _fill_extras(extras):
 setup(
     name=PKG_NAME,
     version=VERSION,
-    author=f"Vedant Joshi",
+    author=" ",
     url=None,
     description="research project",
     long_description=_read_file("README.md"),
